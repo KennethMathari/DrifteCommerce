@@ -9,18 +9,27 @@ import com.example.driftecommerce.data.network.models.Product
 import com.example.driftecommerce.databinding.ProductListItemBinding
 import com.squareup.picasso.Picasso
 
-class ProductListAdapter :
+class ProductListAdapter(private val listener: OnItemClickListener) :
     ListAdapter<Product, ProductListAdapter.ProductListViewHolder>(DiffCallback()) {
 
-    class ProductListViewHolder(private val binding: ProductListItemBinding) :
+    inner class ProductListViewHolder(private val binding: ProductListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bindItems(productItems: Product?) {
+        fun bindItems(productItems: Product?, listener: OnItemClickListener) {
             binding.apply {
                 productName.text = productItems?.name
                 productPrice.text = productItems?.price.toString()
                 Picasso.get().load(productItems?.imageUrl).into(productImage)
+                root.setOnClickListener {
+                    if (productItems != null) {
+                        listener.onItemClick(productItems)
+                    }
+                }
             }
         }
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(item: Product)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductListViewHolder {
@@ -31,16 +40,16 @@ class ProductListAdapter :
     }
 
     override fun onBindViewHolder(holder: ProductListViewHolder, position: Int) {
-        holder.bindItems(getItem(position))
+        holder.bindItems(getItem(position), listener)
     }
 
-    class DiffCallback: DiffUtil.ItemCallback<Product>(){
+    class DiffCallback : DiffUtil.ItemCallback<Product>() {
         override fun areItemsTheSame(oldItem: Product, newItem: Product): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(oldItem: Product, newItem: Product): Boolean {
-            return oldItem==newItem
+            return oldItem == newItem
         }
 
     }
