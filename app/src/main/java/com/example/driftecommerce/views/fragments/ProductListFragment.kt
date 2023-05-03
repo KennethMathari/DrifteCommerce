@@ -39,7 +39,9 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list),
     }
 
     override fun onItemClick(item: Product) {
-        Toast.makeText(requireContext(), "Item clicked: ${item.name}", Toast.LENGTH_SHORT).show()
+        //Display bottom sheet dialog
+        ProductDetailBottomSheetFragment(item)
+            .show(requireActivity().supportFragmentManager, "ProductDetailBottomSheetFragment")
     }
 
 }
