@@ -5,30 +5,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.driftecommerce.R
+import com.example.driftecommerce.data.network.models.Product
 import com.example.driftecommerce.databinding.FragmentProductListBinding
 import com.example.driftecommerce.viewmodel.ProductListViewModel
 import com.example.driftecommerce.views.adapter.ProductListAdapter
 
 class ProductListFragment : Fragment(R.layout.fragment_product_list) {
 
-    private var _productListBinding: FragmentProductListBinding? = null
-    private val productListBinding get() = _productListBinding
+    private lateinit var productListBinding: FragmentProductListBinding
 
     private lateinit var productListAdapter: ProductListAdapter
     private  val productListViewModel = ProductListViewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _productListBinding = FragmentProductListBinding.inflate(inflater, container, false)
-        return productListBinding?.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        productListBinding = FragmentProductListBinding.bind(view)
         //Get Product List from ViewModel
         productListViewModel.getProductsList()
         initObserver()
@@ -36,19 +29,14 @@ class ProductListFragment : Fragment(R.layout.fragment_product_list) {
 
     private fun initObserver() {
         productListViewModel.productsList.observe(viewLifecycleOwner){productList->
-            productListAdapter = ProductListAdapter(productList)
+            productListAdapter = ProductListAdapter()
             productListBinding?.productsRecyclerView?.apply {
                 setHasFixedSize(true)
                 adapter = productListAdapter
+                productListAdapter.submitList(productList)
             }
 
         }
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _productListBinding = null
     }
 
 }
