@@ -10,4 +10,9 @@
         android:name="com.example.driftecommerce.views.fragments.ProductListFragment"
         android:label="fragment_product_list"
         tools:layout="@layout/fragment_product_list" />
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.driftecommerce.views.fragments.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>
