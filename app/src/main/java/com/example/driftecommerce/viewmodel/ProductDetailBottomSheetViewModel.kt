@@ -9,25 +9,20 @@ import androidx.room.Room
 import com.example.driftecommerce.data.local.dao.CartDao
 import com.example.driftecommerce.data.local.database.DriftDatabase
 import com.example.driftecommerce.data.network.models.Product
+import com.example.driftecommerce.data.repository.CartRepository
 import com.example.driftecommerce.domain.ProductDomain
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import toEntity
 import javax.inject.Inject
 
-class ProductDetailBottomSheetViewModel (
+@HiltViewModel
+class ProductDetailBottomSheetViewModel @Inject constructor(
+    private val cartRepository: CartRepository
 ): ViewModel() {
      fun saveProductToCart(product: ProductDomain) {
          viewModelScope.launch {
-
-//             val db = Room.databaseBuilder(
-//                 application,
-//                 DriftDatabase::class.java,
-//                 "drift_database"
-//             ).build()
-//
-//             val cartDao = db.cartDao
-//             cartDao.insertCart(product.toEntity())
-            // driftDatabase.cartDao.insertCart(product.toEntity())
+                cartRepository.saveCartProduct(product)
          }
 
     }

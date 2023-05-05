@@ -16,21 +16,17 @@ import com.example.driftecommerce.domain.ProductDomain
 import com.example.driftecommerce.viewmodel.ProductDetailBottomSheetViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.squareup.picasso.Picasso
+import dagger.hilt.android.AndroidEntryPoint
 import toEntity
+import javax.inject.Inject
 
 
+@AndroidEntryPoint
 class ProductDetailBottomSheetFragment(private val item: ProductDomain) :
     BottomSheetDialogFragment(R.layout.fragment_product_detail_bottom_sheet) {
 
+    @Inject lateinit var productDetailBottomSheetViewModel: ProductDetailBottomSheetViewModel
     private lateinit var productDetailBottomSheetBinding: FragmentProductDetailBottomSheetBinding
-    private lateinit var productDetailBottomSheetViewModel : ProductDetailBottomSheetViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        productDetailBottomSheetViewModel = ViewModelProvider(this)[ProductDetailBottomSheetViewModel::class.java]
-
-
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

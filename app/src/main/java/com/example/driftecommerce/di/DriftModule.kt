@@ -9,6 +9,7 @@ import com.example.driftecommerce.data.local.dao.CartDao
 import com.example.driftecommerce.data.local.dao.ProductDao
 import com.example.driftecommerce.data.local.database.DriftDatabase
 import com.example.driftecommerce.data.network.Services
+import com.example.driftecommerce.data.repository.CartRepository
 import com.example.driftecommerce.data.repository.ProductListRepository
 import com.example.driftecommerce.viewmodel.ProductDetailBottomSheetViewModel
 import com.example.driftecommerce.viewmodel.ProductListViewModel
@@ -81,5 +82,17 @@ object DriftModule {
     @Singleton
     fun provideProductListViewModel(productListRepository: ProductListRepository) : ProductListViewModel {
         return ProductListViewModel(productListRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartRepository(cartDao: CartDao) : CartRepository {
+        return CartRepository(cartDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProductDetailBottomSheetViewModel(cartRepository: CartRepository) : ProductDetailBottomSheetViewModel {
+        return ProductDetailBottomSheetViewModel(cartRepository)
     }
 }
