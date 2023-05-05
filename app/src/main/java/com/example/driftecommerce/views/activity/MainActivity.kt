@@ -9,7 +9,9 @@ import com.example.driftecommerce.databinding.ActivityMainBinding
 import com.example.driftecommerce.viewmodel.BottomNavigationViewModel
 import com.example.driftecommerce.views.fragments.CartFragment
 import com.example.driftecommerce.views.fragments.ProductListFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val bottomNavigationViewModel: BottomNavigationViewModel by viewModels()
