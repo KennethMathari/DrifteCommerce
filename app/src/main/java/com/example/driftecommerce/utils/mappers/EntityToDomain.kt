@@ -22,3 +22,12 @@ fun ProductDomain.toEntity(): CartEntity {
         productPrice = this.price
     )
 }
+
+fun CartEntity.toDomain(): ProductDomain {
+    return ProductDomain(
+        id = this.productId,
+        imageUrl = this.productImage,
+        name = this.productName,
+        price = this.productPrice
+    )
+}

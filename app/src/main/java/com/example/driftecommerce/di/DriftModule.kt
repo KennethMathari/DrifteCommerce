@@ -11,6 +11,7 @@ import com.example.driftecommerce.data.local.database.DriftDatabase
 import com.example.driftecommerce.data.network.Services
 import com.example.driftecommerce.data.repository.CartRepository
 import com.example.driftecommerce.data.repository.ProductListRepository
+import com.example.driftecommerce.viewmodel.CartViewModel
 import com.example.driftecommerce.viewmodel.ProductDetailBottomSheetViewModel
 import com.example.driftecommerce.viewmodel.ProductListViewModel
 import com.squareup.moshi.Moshi
@@ -94,5 +95,11 @@ object DriftModule {
     @Singleton
     fun provideProductDetailBottomSheetViewModel(cartRepository: CartRepository) : ProductDetailBottomSheetViewModel {
         return ProductDetailBottomSheetViewModel(cartRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartViewModel(cartRepository: CartRepository) : CartViewModel {
+        return CartViewModel(cartRepository)
     }
 }

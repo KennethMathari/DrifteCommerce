@@ -23,17 +23,6 @@ class ProductListViewModel @Inject constructor(
 
     fun getProductsList() = viewModelScope.launch {
         //Fetch the product list from  the Repository layer
-//        val productsList = productListRepository.getProductsList()
-//
-//        if (productsList == null){
-//            //Set the product result to null
-//            _productsList.value = null
-//            return@launch
-//            Log.e("NoProduct","No products available")
-//        }else{
-//            _productsList.value = productsList.data
-//            Log.e("Products", productsList.data.toString())
-//        }
         productListRepository.getProductsList()?.collect{
             _productsList.value = it
             Log.e("Products", it.toString())
