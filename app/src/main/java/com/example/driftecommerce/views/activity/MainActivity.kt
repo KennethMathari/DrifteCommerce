@@ -2,44 +2,37 @@ package com.example.driftecommerce.views.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import com.example.driftecommerce.R
 import com.example.driftecommerce.databinding.ActivityMainBinding
-import com.example.driftecommerce.viewmodel.BottomNavigationViewModel
-import com.example.driftecommerce.views.fragments.CartFragment
-import com.example.driftecommerce.views.fragments.ProductListFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val bottomNavigationViewModel: BottomNavigationViewModel by viewModels()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottonnav.setOnItemSelectedListener{menuItem->
-            bottomNavigationViewModel.setSelectedItemId(menuItem.itemId)
-            true
-        }
-
-        bottomNavigationViewModel.selectedItemId.observe(this){itemId->
-            when(itemId){
-                R.id.home -> replaceFragment(ProductListFragment())
-                R.id.cart -> replaceFragment(CartFragment())
+        binding.bottomnav.setOnItemSelectedListener{menuItem->
+            val navHost = binding.navHostFragment.id
+            when(menuItem.itemId){
+                R.id.home -> {
+                    findNavController(navHost).navigate(R.id.productListFragment)
+                    true
+                }
+                R.id.cart -> {
+                    findNavController(navHost).navigate(R.id.cartFragment)
+                    true
+                }
+                else -> false
             }
         }
 
-    }
-
-    private fun replaceFragment(fragment: Fragment){
-        supportFragmentManager.beginTransaction().apply {
-            replace(binding.navHostFragment.id,fragment)
-            commit()
-        }
     }
 
 }
