@@ -38,6 +38,10 @@ class CartFragment : Fragment(R.layout.fragment_cart) {
                 cartAdapter.submitList(cartProducts)
             }
         }
+
+        cartViewModel.cartTotal.observe(viewLifecycleOwner){
+            cartBinding.cartTotalTV.text = it.toString()
+        }
     }
 
 
